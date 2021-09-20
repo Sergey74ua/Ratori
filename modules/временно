@@ -1,0 +1,106 @@
+import json
+
+from modules.Save import Save
+from modules.Settings import Settings
+
+    self.save = Save()
+    self.s = Settings()
+
+    self.game_version = self.s.options['game_version']
+    self.width = self.s.options['window_width']
+    self.height = self.s.options['window_height']
+    self.fps = self.s.options['window_frequency']
+
+    self.save.save_game("один", "два", "три")
+
+    self.save.load_game()
+
+#########################################################
+
+    for e in pg.event.get():
+        if e.type == pg.QUIT:
+            quit()
+        if e.type == pg.MOUSEBUTTONUP and e.button == 1:
+            pg.mixer.music.unpause()
+            #pygame.menu_state = not menu_state
+    """
+        if menu_state:
+        display.set_mode((800, 640), RESIZABLE)
+        game_menu.draw_menu(g)
+    else:
+        display.set_mode((0, 0), FULLSCREEN)
+        obj_OOP.draw(g)
+    """
+
+#########################################################
+
+    def update(self, e):
+        """ Обновление игры """
+        if e.type == pg.MOUSEBUTTONUP:  # Клики кнопок мышки (события)
+            print("Нажата кнопка № ", e.button, " в позиции ", pg.mouse.get_pos())
+
+        click = pg.mouse.get_pressed(3)  # Клики кнопок мышки (список)
+        if click[0] == True:
+            pos = pg.mouse.get_pos()
+            print(pos, click)
+
+        if e.type == pg.KEYDOWN and e.key == pg.K_BACKSPACE:  # Клики кнопок клавиатуры (события)
+            self.unit.rect.x -= 50
+
+        if e.type == pg.KEYDOWN:  # Клики кнопок клавиатуры (события) (СБРАСЫВАЮТСЯ ОТ МЫШКИ)
+            if e.key == pg.K_RIGHT:
+                self.turn = 'right'
+            elif e.key == pg.K_LEFT:
+                self.turn = 'left'
+            if e.key == pg.K_UP:
+                self.turn = 'up'
+            elif e.key == pg.K_DOWN:
+                self.turn = 'down'
+        else:
+            self.turn = 'stop'
+
+        keys = pg.key.get_pressed()  # Клики кнопок клавиатуры (список)
+        if keys[pg.K_LEFT]:
+            self.unit.rect.x -= 3
+            self.unit.turn = 'left'
+        if keys[pg.K_RIGHT]:
+            self.unit.rect.x += 3
+            self.unit.turn = 'right'
+        if keys[pg.K_UP]:
+            self.unit.rect.y -= 3
+        if keys[pg.K_DOWN]:
+            self.unit.rect.y += 3
+
+        self.ground.update(e)  # Передача события дочернему объекту
+        self.unit.update(e)
+
+#########################################################
+
+    list_ground = sprite.Group()
+    for y in range(8):
+        for x in range(8):
+            frame = Ground(room_01[y][x], x, y)
+            list_ground.add(frame)
+
+    list_unit = sprite.Group()
+    for i in range(5):
+        unit = Unit((i*200, i*100))
+        list_unit.add(unit)
+
+############################################################################
+    # Сохранение
+    import pickle
+    path = r'save/save_test.bin'
+    if e.type == pg.KEYDOWN and e.key == pg.K_F4:
+        data = self.game
+        file = open(path, 'wb')
+        pickle.dump(data, file, protocol=pickle.HIGHEST_PROTOCOL)
+        file.close()
+        print('сохраняем', data)
+    # Загрузка
+    if e.type == pg.KEYDOWN and e.key == pg.K_F5:
+        file = open(path, 'rb')
+        data = pickle.load(file)
+        assert data == self.game
+        file.close()
+        print('загружаем', data)
