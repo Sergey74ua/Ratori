@@ -45,8 +45,8 @@ class Hero(object):
     def draw(self, g):
         """ Отрисовка персонажа """
         g.blit(self.image, self.rect)
-        pg.draw.line(g, 'red', (600, 320), (680, 400), 1)  ########
-        pg.draw.line(g, 'red', (600, 400), (680, 320), 1)  ########
+        #pg.draw.line(g, 'red', (600, 320), (680, 400), 1)  ########
+        #pg.draw.line(g, 'red', (600, 400), (680, 320), 1)  ########
 
     def select(self, speed):
         """ Позиция персонажа """

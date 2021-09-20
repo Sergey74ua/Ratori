@@ -52,7 +52,7 @@ class Gangster(Abstract):
     def draw_unit(self, g):
         """ Отрисовка персонажа """
         g.blit(self.image, self.rect)
-        pg.draw.rect(g, 'black', self.rect, 1)  ########
+        #pg.draw.rect(g, 'black', self.rect, 1)  ########
 
     def select(self, speed):
         """ Позиция персонажа """
